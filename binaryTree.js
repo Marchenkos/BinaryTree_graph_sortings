@@ -2,12 +2,9 @@ let BinaryTree = function(root = null) {
     this.root = root;
 
     this.createNode = (value) => {
-        let node = {};
-        node.value = value;
-        node.left = null;
-        node.right = null;
-
-        return node;
+        return  {value,
+                left: null,
+                right: null};
     },
 
     this.add = (node) => {
