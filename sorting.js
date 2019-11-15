@@ -23,7 +23,7 @@ function arraySort() {
         }
 
         return sortArray;
-    }, 
+    },
 
     this.selectionSort = () => {
         let sortArray = this.array;
@@ -74,9 +74,7 @@ function arraySort() {
 
         for (let i = 0; i < stepList.length; i++) {
             for (let j = 0; j < stepList.length; j++) {
-
                 for (let k = j + stepList[i]; k < sortArray.length; k = k + stepList[i]) {
-
                     if (sortArray[k] < sortArray[k - stepList[i]]) {
                         [sortArray[k - stepList[i]], sortArray[k]] = [sortArray[k], sortArray[k - stepList[i]]];
 
@@ -90,6 +88,7 @@ function arraySort() {
 
         return sortArray;
     }
+
     this.findMiddle = array => {
         return Math.floor(array.length / 2);
     };
@@ -163,10 +162,10 @@ function arraySort() {
 
             i++;
         }
+
         return [...this.quickSort(sortArray.slice(0, middle + 1)), ...this.quickSort(sortArray.slice(middle + 1))];
     };
 }
-
 
 let firstArray = new arraySort();
 
