@@ -16,6 +16,10 @@ function Graf(vertexList = {}) {
                 return graf[prop] instanceof Object ? graf[prop].count : graf[prop];
             } else {
                 result = graf[prop] instanceof Object ? this.depthSearch(searchElement, graf[prop], alreadyReviewedVertexes) : "Nothing found";
+
+                if(result != "Nothing found") {
+                    return result;
+                }
             }
         }
 
@@ -45,7 +49,7 @@ function Graf(vertexList = {}) {
     };
 }
 
-const graf1 = new Graf({"A": {"B": {"L": {"O": 7, "count": 2}, "M": 10, "count": 12}, "C": {"D": {"K":2, "count": 5}, "F": 6, "count": 4}, "G": 3, "count": 7}});
+const graf1 = new Graf({"A": {"B": {"L": {"O": 7, "count": 2}, "M": {"S":2, "Q":{"R":2, "count": 45}, "count": 14}, "count": 12}, "C": {"D": {"K":2, "count": 5}, "F": {"J":32, "Z":18, "count": 14}, "count": 4}, "G": 3, "count": 7}});
 
-console.log(graf1.widthSearch("V"));
-console.log(graf1.depthSearch("B"));
+console.log(graf1.widthSearch("R"));
+console.log(graf1.depthSearch("O"));
