@@ -1,55 +1,46 @@
 function bubbleSort(array) {
-    let sortArray = array;
-    let currentPosition = 0;
-    let nextPosition = 1;
-
-    for (let period = 0; period < sortArray.length; period++) {
-        if (sortArray[currentPosition]  > sortArray[nextPosition]) {
-            [sortArray[currentPosition], sortArray[nextPosition]] = [sortArray[nextPosition], sortArray[currentPosition]];
-        }
-
-        if (nextPosition <= sortArray.length) {
-            currentPosition = nextPosition;
-            nextPosition++;
-            period--;
-        } else {
-            currentPosition = 0;
-            nextPosition = 1;
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array.length; j++) {
+            if(array[j] > array[j + 1]) {
+                [array[j], array[j + 1]] = [array[j + 1], array[j]];
+            }
         }
     }
 
-    return sortArray;
+    return array;
 }
 
 function selectionSort(array) {
-    let sortArray = array;
-    let max = sortArray[0];
-    let indexMaxElem;
+    let minElement = array[0];
+    let minElementIndex;
 
-    for (let startPosition = 0; startPosition < sortArray.length; startPosition++) {
-        for (let i = startPosition; i < sortArray.length; i++) {
-            if (max < sortArray[i]) {
-                max = sortArray[i];
-                indexMaxElem = i;
+    for (let i = 0; i < array.length - 1; i++) {
+        minElementIndex = i;
+
+        for (let j = i + 1; j < array.length; j++) {
+            if (array[j] < minElement) {
+                minElement = array[j];
+                minElementIndex = j;
             }
         }
 
-        [sortArray[startPosition], sortArray[indexMaxElem]] = [sortArray[indexMaxElem], sortArray[startPosition]];
-        max = -10000;
+        if(i != minElementIndex) {
+            [array[i], array[minElementIndex]] = [array[minElementIndex], array[i]];
+        }
     }
 
-    return sortArray;
+    return array;
 }
 
 function linearSort(array) {
     let sortArray = array;
 
-    for (let currentPosition = 1; currentPosition < sortArray.length; currentPosition++) {
-        if (sortArray[currentPosition] < sortArray[currentPosition - 1]) {
-            [sortArray[currentPosition - 1], sortArray[currentPosition]] = [sortArray[currentPosition], sortArray[currentPosition - 1]];
+    for (let i = 1; i < sortArray.length; i++) {
+        if (sortArray[i] < sortArray[i - 1]) {
+            [sortArray[i - 1], sortArray[i]] = [sortArray[i], sortArray[i - 1]];
 
-            if (currentPosition > 1) {
-                currentPosition = currentPosition - 2;
+            if (i > 1) {
+                i = i - 2;
             }
         }
     }
@@ -58,24 +49,15 @@ function linearSort(array) {
 }
 
 function ShellSort(array) {
-    let sortArray = array;
-    const stepList = [5, 3, 1];
-
-    for (let i = 0; i < stepList.length; i++) {
-        for (let j = 0; j < stepList.length; j++) {
-            for (let k = j + stepList[i]; k < sortArray.length; k = k + stepList[i]) {
-                if (sortArray[k] < sortArray[k - stepList[i]]) {
-                    [sortArray[k - stepList[i]], sortArray[k]] = [sortArray[k], sortArray[k - stepList[i]]];
-
-                    if (k > stepList[i]) {
-                        k = k - stepList[i] * 2;
-                    }
-                }
+    for (let i = Math.floor(array.length / 2); i > 0; i /= 2) {
+        for (let j = i; j < array.length; j++) {
+            for (let k = j - i; k >= 0 && array[k] > array[k + i]; k -= i){
+                [array[k], array[k + i]] = [array[k + i], array[k]];
             }
         }
     }
 
-    return sortArray;
+    return array;
 }
 
 function findMiddle(array) {
