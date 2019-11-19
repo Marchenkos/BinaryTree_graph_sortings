@@ -13,13 +13,13 @@ function Graf(vertexList = {}) {
             }
 
             if (searchElement == prop) {
-                return graf[prop] instanceof Object ? graf[prop].count : graf[prop];
+                return graf[prop];
             } else {
-                result = graf[prop] instanceof Object ? this.depthSearch(searchElement, graf[prop], alreadyReviewedVertexes) : "Nothing found";
+                result = graf[prop] instanceof Object ? this.depthSearch(searchElement, graf[prop], alreadyReviewedVertexes) : null;
+            }
 
-                if(result != "Nothing found") {
-                    return result;
-                }
+            if(result) {
+                return result;
             }
         }
 
@@ -39,9 +39,9 @@ function Graf(vertexList = {}) {
             countOfProps++;
 
             if (searchElement == prop) {
-                return graf[prop] instanceof Object ? graf[prop].count : graf[prop];
+                return graf[prop];
             } else if(countOfProps == Object.keys(graf).length) {
-                result = currentComplexVertex.length ? this.widthSearch(searchElement, currentComplexVertex.shift(), currentComplexVertex) : "Nothing found";
+                result = currentComplexVertex.length ? this.widthSearch(searchElement, currentComplexVertex.shift(), currentComplexVertex) : null;
             }
         }
 
@@ -49,7 +49,30 @@ function Graf(vertexList = {}) {
     };
 }
 
-const graf1 = new Graf({"A": {"B": {"L": {"O": 7, "count": 2}, "M": {"S":2, "Q":{"R":2, "count": 45}, "count": 14}, "count": 12}, "C": {"D": {"K":2, "count": 5}, "F": {"J":32, "Z":18, "count": 14}, "count": 4}, "G": 3, "count": 7}});
-
-console.log(graf1.widthSearch("R"));
-console.log(graf1.depthSearch("O"));
+const graf1 = new Graf(
+    {"A": 7, "children": [
+        { "B": 12, "children": [
+            {"L": 2, "children": [
+                {"O": 7}
+            ]},
+            {"M": 45, "children": [
+                { "S":2 },
+                { "Q": 45, "children": [
+                    { "R": 2 }
+                ]}
+            ]}]
+        },
+        {"C": 14, "children": [
+            {"D": 5, "children": [
+                {"K":2}
+            ]},
+            {"F": 14, "children":[
+                {"J":32},
+                {"Z":18}
+            ]}
+        ]},
+        {"G": 3}
+    ]}
+);
+console.log(graf1.widthSearch("Q"));
+console.log(graf1.depthSearch("B"));
