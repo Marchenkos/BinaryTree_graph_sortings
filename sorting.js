@@ -33,11 +33,9 @@ function selectionSort(array) {
 }
 
 function linearSort(array) {
-    let sortArray = array;
-
-    for (let i = 1; i < sortArray.length; i++) {
-        if (sortArray[i] < sortArray[i - 1]) {
-            [sortArray[i - 1], sortArray[i]] = [sortArray[i], sortArray[i - 1]];
+    for (let i = 1; i < array.length; i++) {
+        if (array[i] < array[i - 1]) {
+            [array[i - 1], array[i]] = [array[i], array[i - 1]];
 
             if (i > 1) {
                 i = i - 2;
@@ -45,7 +43,7 @@ function linearSort(array) {
         }
     }
 
-    return sortArray;
+    return array;
 }
 
 function ShellSort(array) {
@@ -84,33 +82,29 @@ function merge(firstArray, secondArray) {
 }
 
 function mergeSort(array) {
-    const sortArray = array;
-
-    if(sortArray.length <= 1) {
-        return sortArray;
+    if(array.length <= 1) {
+        return array;
     }
 
-    const middle = findMiddle(sortArray);
-    const firstPart = sortArray.slice(0, middle);
-    const secondPart = sortArray.slice(middle);
+    const middle = findMiddle(array);
+    const firstPart = array.slice(0, middle);
+    const secondPart = array.slice(middle);
 
     return merge(mergeSort(firstPart), mergeSort(secondPart));
 }
 
 function quickSort(array) {
-    let sortArray = array;
+    const middle = findMiddle(array);
+    const mainElement = array[middle];
 
-    const middle = findMiddle(sortArray);
-    const mainElement = sortArray[middle];
-
-    if (sortArray.length <= 2) {
-        return sortArray;
+    if (array.length <= 2) {
+        return array;
     }
 
-    for (let i = 0, n = sortArray.length - 1; i <= middle && n >= middle; i++) {
-        if ( sortArray[i] >= mainElement) {
-            if ( sortArray[n] <= mainElement) {
-                [sortArray[i], sortArray[n]] = [sortArray[n], sortArray[i]];
+    for (let i = 0, n = array.length - 1; i <= middle && n >= middle; i++) {
+        if ( array[i] >= mainElement) {
+            if ( array[n] <= mainElement) {
+                [array[i], array[n]] = [array[n], array[i]];
             }
 
             n--;
@@ -119,16 +113,16 @@ function quickSort(array) {
             continue;
         }
 
-        if ( sortArray[n] <= mainElement) {
-            if ( sortArray[i] >= mainElement) {
-                [sortArray[i], sortArray[n]] = [sortArray[n], sortArray[i]];
+        if ( array[n] <= mainElement) {
+            if ( array[i] >= mainElement) {
+                [array[i], array[n]] = [array[n], array[i]];
             }
 
             continue;
         }
     }
 
-    return [...quickSort(sortArray.slice(0, middle + 1)), ...quickSort(sortArray.slice(middle + 1))];
+    return [...quickSort(array.slice(0, middle + 1)), ...quickSort(array.slice(middle + 1))];
 }
 
 const array = [14, 8, 9, 5, 1, 3, 2];
