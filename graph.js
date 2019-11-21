@@ -1,11 +1,11 @@
-function Graf(vertexList = {}) {
+function Graph(vertexList = {}) {
     this.vertexList = vertexList;
 
-    this.depthSearch = (searchElement, graf = this.vertexList, reviewedVertexes = []) => {
+    this.depthSearch = (searchElement, graph = this.vertexList, reviewedVertexes = []) => {
         let alreadyReviewedVertexes = reviewedVertexes;
         let result;
 
-        for (let prop in graf) {
+        for (let prop in graph) {
             if (alreadyReviewedVertexes.includes(prop)) {
                 continue;
             } else {
@@ -13,9 +13,9 @@ function Graf(vertexList = {}) {
             }
 
             if (searchElement == prop) {
-                return graf[prop];
+                return graph[prop];
             } else {
-                result = graf[prop] instanceof Object ? this.depthSearch(searchElement, graf[prop], alreadyReviewedVertexes) : null;
+                result = graph[prop] instanceof Object ? this.depthSearch(searchElement, graph[prop], alreadyReviewedVertexes) : null;
             }
 
             if(result) {
@@ -26,22 +26,24 @@ function Graf(vertexList = {}) {
         return result;
     };
 
-    this.widthSearch = (searchElement, graf = this.vertexList, complexVertex = []) => {
-        let currentComplexVertex = complexVertex;
+    this.widthSearch = (searchElement, graph = this.vertexList, childNodes = []) => {
+        let childrenArray = childNodes;
         let countOfProps = 0;
         let result;
 
-        for (let prop in graf) {
-            if (graf[prop] instanceof Object) {
-                currentComplexVertex.push(graf[prop]);
-            }
-
-            countOfProps++;
-
+        for (let prop in graph) {
             if (searchElement == prop) {
-                return graf[prop];
-            } else if(countOfProps == Object.keys(graf).length) {
-                result = currentComplexVertex.length ? this.widthSearch(searchElement, currentComplexVertex.shift(), currentComplexVertex) : null;
+                return graph[prop];
+            } else {
+                if (graph[prop] instanceof Array) {
+                    childrenArray = [...childrenArray, ...graph[prop]];
+                }
+
+                countOfProps++;
+
+                if(countOfProps == Object.keys(graph).length) {
+                    result = childrenArray.length ? this.widthSearch(searchElement, childrenArray.shift(), childrenArray) : null;
+                }
             }
         }
 
@@ -49,7 +51,7 @@ function Graf(vertexList = {}) {
     };
 }
 
-const graf1 = new Graf(
+const graph1 = new Graph(
     {"A": 7, "children": [
         { "B": 12, "children": [
             {"L": 2, "children": [
@@ -74,5 +76,5 @@ const graf1 = new Graf(
         {"G": 3}
     ]}
 );
-console.log(graf1.widthSearch("Q"));
-console.log(graf1.depthSearch("B"));
+console.log(graph1.widthSearch("Q"));
+console.log(graph1.depthSearch("B"));
